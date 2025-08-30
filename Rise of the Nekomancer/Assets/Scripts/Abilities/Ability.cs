@@ -11,8 +11,8 @@ public class Ability : MonoBehaviour
     public float InterruptedCooldown;
     [Tooltip("How long it takes to cast. Set 0 for instant")]
     public float CastTime;
-    [Tooltip("If the effect happens right away on cast, or after. Set true if you want the ability to be aimable")]
-    public bool IsChanneled;
+    [Tooltip("If the effect happens right away on cast, or after. If 0, this won't matter")]
+    public float ChanneledTime;
     public ICaster Caster;
     [Tooltip("If locks you on ground to cast during casting")]
     public bool StopsToCast;
@@ -124,6 +124,8 @@ public class Ability : MonoBehaviour
             Effect();
 
             yield return new WaitForSeconds(CastTime);
+
+            yield return new WaitForSeconds(ChanneledTime);
 
             Caster.IsCasting = false;
         }

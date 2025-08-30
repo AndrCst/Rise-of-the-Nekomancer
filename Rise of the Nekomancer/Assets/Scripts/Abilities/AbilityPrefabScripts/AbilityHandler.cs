@@ -36,17 +36,9 @@ public class AbilityHandler : MonoBehaviour, IPoolable
     private Coroutine waitCoroutine;
     IEnumerator WaitForCast()
     {
-        if (MyAbility.IsChanneled)
-        {
-            FireEffect();
-            yield return new WaitForSeconds(MyAbility.CastTime);
-        }
-        else
-        {
-            yield return new WaitForSeconds(MyAbility.CastTime);
-            FireEffect();
-        }
-
+        yield return new WaitForSeconds(MyAbility.CastTime);
+        FireEffect();
+        yield return new WaitForSeconds(MyAbility.ChanneledTime);       
         RemoveObject();
     }
 
@@ -60,7 +52,7 @@ public class AbilityHandler : MonoBehaviour, IPoolable
         OnReturn();
         ObjectPoolManager.ReturnObjectToPool(gameObject);
     }
-    void HandleInterruption(GameObject obj)
+    public virtual void HandleInterruption(GameObject obj)
     {
         if (obj == MyAbility.Caster.CastingObject && waitCoroutine != null)
         {
