@@ -2444,7 +2444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &2037564387
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2875,6 +2875,10 @@ PrefabInstance:
     - target: {fileID: 7193927235633495905, guid: fbe48daa52af88344aa7e402a599a1dd, type: 3}
       propertyPath: CastTime
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7193927235633495905, guid: fbe48daa52af88344aa7e402a599a1dd, type: 3}
+      propertyPath: IsChanneled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7564154496662377766, guid: fbe48daa52af88344aa7e402a599a1dd, type: 3}
       propertyPath: m_LocalRotation.w
