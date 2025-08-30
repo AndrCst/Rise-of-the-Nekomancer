@@ -50,7 +50,8 @@ public class Ability : MonoBehaviour
     - Checks if it's on cooldown, if it is, interrupts casting
     - If not, continues and starts cooldown coroutine 
     - If it stops to cast, it'll change the ICaster's Stop variable to true, it needs to be included on the Controller's movement
-    - If it's channeled, effect happens, then starts counting for casting (Think of Aurelion Q, Vel'Koz R)
+    - If it's channeled, effect happens, then starts counting for casting (Think of Aurelion Q, Vel'Koz R). In this case, the prefab will probably also have a continuous effect
+    This will be handled by the AbilityHandler, if effect begins right away or not, but either way, this still counts the logic for CastTime
     - Also if it's aimed, like V Rising casting, Xerath R, it'll begin Channeled by just showing target prefab, and the AbilityHandler will handle releasing the final effect
     - Effects does the effect, using the current combo value (Starting at 1)
     - The effect generally will be a prefab made with AbilityHandler, that'll handle aiming, firing projectiles, damaging, etc
