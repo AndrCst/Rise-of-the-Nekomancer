@@ -29,6 +29,8 @@ public class Ability : MonoBehaviour
     public CastingCanvasHandler CastingCanvasHandler;
     public Sprite AbilityImage;
 
+    public float Range;
+
     /*
      How to use:
     - Create a script that's a child of this (Prefab Ability child should already handle all though, Combo Insta too, but you can mix and match)
@@ -51,6 +53,7 @@ public class Ability : MonoBehaviour
     - If it's channeled, effect happens, then starts counting for casting (Think of Aurelion Q, Vel'Koz R)
     - Also if it's aimed, like V Rising casting, Xerath R, it'll begin Channeled by just showing target prefab, and the AbilityHandler will handle releasing the final effect
     - Effects does the effect, using the current combo value (Starting at 1)
+    - The effect generally will be a prefab made with AbilityHandler, that'll handle aiming, firing projectiles, damaging, etc
     - Then Combo goes up
     - ComboCoroutine starts counting time, you have X seconds to cast again and gain combo benefits
     - If you fail to, the comboIndex will just revert to 1

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using UnityEngine.InputSystem.iOS;
 
 public class PlayerController : MonoBehaviour, ICaster
 {
@@ -10,6 +11,8 @@ public class PlayerController : MonoBehaviour, ICaster
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float moveSpeed = 1;
     private float speedMultiplier = 100000f; //For linear damping 5 and angular 0.5
+    public Collider Collider;
+
 
     public List<Ability> Abilities; //The index here is going to be important, if the game has a basic attack, 0 for exemple will always be it
 
@@ -26,6 +29,13 @@ public class PlayerController : MonoBehaviour, ICaster
         get { return shouldStopForCasting; }
         set { shouldStopForCasting = value; }
     }
+
+    public GameObject CastingObject
+    {
+        get { return gameObject;}
+    }
+    
+
     private bool shouldStopForCasting;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -66,6 +76,10 @@ public class PlayerController : MonoBehaviour, ICaster
         rb = rb != null ? rb : GetComponent<Rigidbody>();
         mainCamera = Camera.main;
         
+        if (Collider == null)
+        {
+            Collider = GetComponent<Collider>();
+        }
     }
 
     void HandleStartInfo()

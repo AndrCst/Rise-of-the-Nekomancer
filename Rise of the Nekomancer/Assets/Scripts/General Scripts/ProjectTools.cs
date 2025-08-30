@@ -4,15 +4,23 @@ using UnityEngine;
 
 public static class ProjectTools
 {   
-    public static List<GameObject> GetValidObjectsOnRange(Vector3 origin, float radius, string searchedTag, LayerMask layerMask)
+    public static List<GameObject> GetValidObjectsOnRange(Vector3 origin, float radius, string[] searchedTags, LayerMask layerMask)
     {
         Collider[] colliders = Physics.OverlapSphere(origin, radius, layerMask);
         List<GameObject> objects = new();
 
         foreach(var collider in colliders)
         {
-            if (collider != null && collider.CompareTag(searchedTag))
-            objects.Add(collider.gameObject);
+            if (collider != null)
+            {
+                foreach (var tag in searchedTags)
+                {
+                    if (collider.CompareTag(tag))
+                    {
+                        objects.Add(collider.gameObject);
+                    }
+                }
+            }
         }
 
         return objects;
@@ -41,7 +49,7 @@ public static class ProjectTools
     }
 
 
-    public static GameObject GetNearestObject(GameObject[] objects, Vector3 origin)
+    public static GameObject GetNearestObject(List<GameObject> objects, Vector3 origin)
     {
         float nearestDistance = float.MaxValue;
         float currentDistance;
