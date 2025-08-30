@@ -96,6 +96,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7109507531022525692}
+  - component: {fileID: 2747282788146610393}
   m_Layer: 0
   m_Name: TempTargetingPrefab
   m_TagString: Untagged
@@ -119,3 +120,18 @@ Transform:
   - {fileID: 722273780860267078}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2747282788146610393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7909485939376546326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff9cb489c4d596f4294097938dbd6ef9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyAbility: {fileID: 0}
+  TargetingObj: {fileID: 1278909655515447449}
+  effectPrefab: {fileID: 3794178618069764436, guid: 8f01947bd481ccd47bb4e7dbbc7cfed4, type: 3}

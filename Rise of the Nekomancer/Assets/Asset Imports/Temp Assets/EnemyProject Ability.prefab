@@ -133,5 +133,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MyAbility: {fileID: 0}
-  locksIn: 0
+  TargetingObj: {fileID: 1278909655515447449}
+  locksIn: 1
   projectilePrefab: {fileID: 8655619620264080139, guid: d5867f002f7eb0443aafd864e7c0ee40, type: 3}

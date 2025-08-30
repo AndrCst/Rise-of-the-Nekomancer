@@ -7,12 +7,12 @@ public class SkillshotAbilityHandler : AbilityHandler
 
     public override void OnSpawn()
     {
-        base.OnSpawn();
         MouseManager = GameManager.Instance.MouseManager;
         transform.forward = new Vector3(MouseManager.WorldMousePosition.x, transform.position.y, MouseManager.WorldMousePosition.z) - transform.position;
+        base.OnSpawn();     
     }
 
-    void Update()
+    void FixedUpdate()
     {
         HandleTargeting();
     }

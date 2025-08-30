@@ -108,6 +108,7 @@ public class Ability : MonoBehaviour
 
             CastingCanvasHandler.HandleSlider(CastTime);
 
+            /*
             if (!IsChanneled)
             {
                 yield return new WaitForSeconds(CastTime);
@@ -118,6 +119,10 @@ public class Ability : MonoBehaviour
                 Effect();
                 yield return new WaitForSeconds(CastTime);
             }
+            */
+            Effect();
+
+            yield return new WaitForSeconds(CastTime);
 
             Caster.IsCasting = false;
         }

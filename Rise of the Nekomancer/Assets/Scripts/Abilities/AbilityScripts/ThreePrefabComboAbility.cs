@@ -11,13 +11,28 @@ public class ComboInstaAbility : Ability
         switch(index)
         {
             case 1:
-            ObjectPoolManager.SpawnObject(prefabOne, transform.position, Quaternion.identity); 
+                GameObject instantiated = ObjectPoolManager.SpawnObject(prefabOne, transform.position, Quaternion.identity);
+
+                var handler = instantiated.GetComponent<AbilityHandler>();
+
+                handler.MyAbility = this;
+                handler.OnSpawn();
                 break;
             case 2:
-                ObjectPoolManager.SpawnObject(prefabTwo, transform.position, Quaternion.identity); 
+                GameObject instantiated2 = ObjectPoolManager.SpawnObject(prefabTwo, transform.position, Quaternion.identity);
+
+                var handler2 = instantiated2.GetComponent<AbilityHandler>();
+
+                handler2.MyAbility = this;
+                handler2.OnSpawn();
                 break;
             case 3:
-                ObjectPoolManager.SpawnObject(prefabThree, transform.position, Quaternion.identity); 
+                GameObject instantiated3 = ObjectPoolManager.SpawnObject(prefabThree, transform.position, Quaternion.identity);
+
+                var handler3 = instantiated3.GetComponent<AbilityHandler>();
+
+                handler3.MyAbility = this;
+                handler3.OnSpawn();
                 break;
         }
     }

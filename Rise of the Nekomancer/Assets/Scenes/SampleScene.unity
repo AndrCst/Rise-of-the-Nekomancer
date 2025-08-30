@@ -1903,11 +1903,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1462793896936644291, guid: f5bee2df2111f2248a0d5117f6181e42, type: 3}
       propertyPath: IsChanneled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1462793896936644291, guid: f5bee2df2111f2248a0d5117f6181e42, type: 3}
       propertyPath: StopsToCast
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1462793896936644291, guid: f5bee2df2111f2248a0d5117f6181e42, type: 3}
       propertyPath: AbilityImage
@@ -2444,7 +2444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &2037564387
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2738,6 +2738,10 @@ PrefabInstance:
     - target: {fileID: 1186133259387703250, guid: b1b1ed447bca472409c5e7d48e02fff2, type: 3}
       propertyPath: Cooldown
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1186133259387703250, guid: b1b1ed447bca472409c5e7d48e02fff2, type: 3}
+      propertyPath: StopsToCast
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1186133259387703250, guid: b1b1ed447bca472409c5e7d48e02fff2, type: 3}
       propertyPath: AbilityImage

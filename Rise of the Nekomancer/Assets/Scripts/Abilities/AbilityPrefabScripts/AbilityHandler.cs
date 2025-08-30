@@ -4,32 +4,58 @@ using System.Collections;
 public class AbilityHandler : MonoBehaviour, IPoolable
 {
     public Ability MyAbility;
-
-    public virtual void OnSpawn()
+    public GameObject TargetingObj;
+    public virtual void OnSpawn() //TODO: This is behaving weirdly. To be able to aim, I need it to be channeled, but channeled was technically supposed to happen always
     {
+
+        
         if (MyAbility.CastTime > 0)
         {
             waitCoroutine = StartCoroutine(WaitForCast());
+
+            if (TargetingObj != null)
+            {
+                TargetingObj.SetActive(true);
+            }
         }
         else
         {
             FireEffect();
+            RemoveObject();
         }
     }
 
     public virtual void OnReturn() //I wonder if I should just call this on the PoolManager?
     {
-
+        if (TargetingObj != null)
+        {
+            TargetingObj.SetActive(false);
+        }
     }
 
     private Coroutine waitCoroutine;
     IEnumerator WaitForCast()
     {
-        yield return new WaitForSeconds(MyAbility.CastTime);
-        FireEffect();
+        if (MyAbility.IsChanneled)
+        {
+            FireEffect();
+            yield return new WaitForSeconds(MyAbility.CastTime);
+        }
+        else
+        {
+            yield return new WaitForSeconds(MyAbility.CastTime);
+            FireEffect();
+        }
+
+        RemoveObject();
     }
 
     public virtual void FireEffect()
+    {
+        
+    }
+
+    void RemoveObject()
     {
         OnReturn();
         ObjectPoolManager.ReturnObjectToPool(gameObject);
