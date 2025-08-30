@@ -9,12 +9,13 @@ public class AgentProjectileAbilityHandler : AbilityHandler
     private Vector3 originalPos;
     public override void OnSpawn()
     {
-        base.OnSpawn();
         controller = MyAbility.Caster.CastingObject.GetComponent<AgentController>();
 
         originalPos = controller.Target.transform.position;
 
         transform.forward = originalPos - transform.position;
+
+        base.OnSpawn();
     }
     public override void FireEffect()
     {
