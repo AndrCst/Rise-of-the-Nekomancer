@@ -16,6 +16,7 @@ public class AgentController : MonoBehaviour, ICaster
     public CapsuleCollider Collider;
     public Ability CurrentAbility;
     public List<Ability> Abilities;
+    [SerializeField] private Damageable damageable;
 
     //ICaster
     public bool IsCasting
@@ -61,6 +62,11 @@ public class AgentController : MonoBehaviour, ICaster
        if (Collider == null)
         {
             Collider = GetComponent<CapsuleCollider>();
+        }
+
+       if (damageable == null)
+        {
+            damageable = GetComponent<Damageable>();
         }
 
         CreateStateMachine();      

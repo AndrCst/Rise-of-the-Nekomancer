@@ -9,9 +9,9 @@ public class PlayerController : MonoBehaviour, ICaster
     public bool CanMove = true;
     private Camera mainCamera;
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private float moveSpeed = 1;
     private float speedMultiplier = 100000f; //For linear damping 5 and angular 0.5
     public Collider Collider;
+    [SerializeField] private Damageable damageable;
 
 
     public List<Ability> Abilities; //The index here is going to be important, if the game has a basic attack, 0 for exemple will always be it
@@ -80,6 +80,11 @@ public class PlayerController : MonoBehaviour, ICaster
         {
             Collider = GetComponent<Collider>();
         }
+
+        if (damageable == null)
+        {
+            damageable = GetComponent<Damageable>();
+        }
     }
 
     void HandleStartInfo()
@@ -110,7 +115,7 @@ public class PlayerController : MonoBehaviour, ICaster
         {
             var adjustedDirection = new Vector3(movementDirection.x, movementDirection.y, movementDirection.z);
 
-            rb.AddForce(moveSpeed * speedMultiplier * Time.deltaTime * adjustedDirection, ForceMode.Force);
+            rb.AddForce(damageable.MovementSpeed * speedMultiplier * Time.deltaTime * adjustedDirection, ForceMode.Force);
         }
     }
 }
