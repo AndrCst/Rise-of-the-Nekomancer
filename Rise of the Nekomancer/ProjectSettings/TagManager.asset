@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Ally
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -40,8 +41,20 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Further Back
+    uniqueID: 258257187
+    locked: 0
+  - name: Back
+    uniqueID: 3226748461
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Front
+    uniqueID: 2561848459
+    locked: 0
+  - name: More In Front
+    uniqueID: 4216961149
     locked: 0
   m_RenderingLayers:
   - Default

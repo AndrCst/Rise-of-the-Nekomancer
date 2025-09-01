@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -34,12 +35,10 @@ public class Projectile : MonoBehaviour, IPoolable
     {
         EntityEvents.OnEntityDied -= EnemyDied;
     }
-    // Update is called once per frame
     void Update()
     {
         MoveBullet();       
     }
-
     void EnemyDied(GameObject deadEnemy)
     {
         if (Target == deadEnemy)
@@ -47,18 +46,15 @@ public class Projectile : MonoBehaviour, IPoolable
             Destroy(gameObject);
         }
     }
-
     void HandleStartMethods()
     {
         HandleStartInfo();
         StartCoroutine(DestroyOnTime());
     }
-
     void HandleStartInfo()
     {
         flyDirection = TargetPosition - transform.position;
     }
-
     void MoveBullet()
     {
         if (IsTracking)
@@ -67,14 +63,11 @@ public class Projectile : MonoBehaviour, IPoolable
         }
         transform.position += ProjectileSpeed * Time.deltaTime * new Vector3(flyDirection.x, 0, flyDirection.z).normalized;
     }
-
     IEnumerator DestroyOnTime()
     {
         yield return new WaitForSeconds(Duration);
-        OnReturn();
-        ObjectPoolManager.ReturnObjectToPool(gameObject);
+        ReturnObject();
     }
-
     public void GetProjectileInfo(GameObject ownerObj, GameObject targetObj, float speed, float damageValue, string[] enemyTag, Vector3 TargetDirection)
     {
         TargetTag = enemyTag;
@@ -84,13 +77,33 @@ public class Projectile : MonoBehaviour, IPoolable
         Damage = damageValue;
 
     }
-
     private void OnTriggerEnter(Collider other)
     {
         EffectOnCollision(other);
     }
-
     public virtual void EffectOnCollision(Collider other)
     {
+        DamageOrDestroy(other);
+    }
+    void DamageOrDestroy(Collider other)
+    {
+        if (TargetTag.Contains(other.tag))
+        {
+            if (other.TryGetComponent<Damageable>(out Damageable damageable))
+            {
+                damageable.TakeDamage(Damage);
+                ReturnObject();
+            }
+        }
+        else if (other.CompareTag("Wall"))
+        {
+            ReturnObject();
+        }
+        
+    }
+    void ReturnObject()
+    {
+        OnReturn();
+        ObjectPoolManager.ReturnObjectToPool(gameObject);
     }
 }

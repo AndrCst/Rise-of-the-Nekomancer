@@ -33,7 +33,8 @@ public class Damageable : MonoBehaviour
     }
     public virtual void HandleStartInfo()
     {
-       
+        Health = MaxHealth;
+        HandleHealthSliderValues();
     }
 
     public void RecalculateMovespeed()

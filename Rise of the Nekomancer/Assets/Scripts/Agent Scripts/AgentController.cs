@@ -47,6 +47,8 @@ public class AgentController : MonoBehaviour, ICaster
     {
         CurrentAbility = Abilities[0];
 
+        NavAgent.speed = damageable.BaseMovementSpeed;
+
         foreach(Ability ability in Abilities)
         {
             ability.Caster = this;

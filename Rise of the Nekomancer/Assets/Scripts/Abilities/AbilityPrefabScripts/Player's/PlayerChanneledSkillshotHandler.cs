@@ -1,10 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerChanneledSkillshot : AbilityHandler
 {
     public MouseManager MouseManager;
     [SerializeField] private GameObject channeledEffectObj;
+    [SerializeField] private float followSpeed;
     public override void OnSpawn()
     {
         MouseManager = GameManager.Instance.MouseManager;
@@ -51,7 +53,11 @@ public class PlayerChanneledSkillshot : AbilityHandler
 
         if (MyAbility.Caster.IsCasting)
         {
-            transform.forward = new Vector3(MouseManager.WorldMousePosition.x, transform.position.y, MouseManager.WorldMousePosition.z) - transform.position;
+            Vector3 mousePos = new Vector3(MouseManager.WorldMousePosition.x, transform.position.y, MouseManager.WorldMousePosition.z) - transform.position;
+
+            Quaternion targetRot = Quaternion.LookRotation(mousePos, Vector3.up);
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, followSpeed * Time.deltaTime);
         }
     }
 }
