@@ -124,6 +124,7 @@ public class Ability : MonoBehaviour
 
             yield return new WaitForSeconds(CastTime);
 
+            if (ChanneledTime > 0)
             CastingCanvasHandler.HandleSlider(ChanneledTime, false);
 
             yield return new WaitForSeconds(ChanneledTime);
