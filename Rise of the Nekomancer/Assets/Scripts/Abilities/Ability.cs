@@ -106,8 +106,7 @@ public class Ability : MonoBehaviour
                stoppingCoroutine = StartCoroutine(StopToCastCoroutine());
             }
 
-
-            CastingCanvasHandler.HandleSlider(CastTime);
+            CastingCanvasHandler.HandleSlider(CastTime, true);
 
             /*
             if (!IsChanneled)
@@ -124,6 +123,8 @@ public class Ability : MonoBehaviour
             Effect();
 
             yield return new WaitForSeconds(CastTime);
+
+            CastingCanvasHandler.HandleSlider(ChanneledTime, false);
 
             yield return new WaitForSeconds(ChanneledTime);
 

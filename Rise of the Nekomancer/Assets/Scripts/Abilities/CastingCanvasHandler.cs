@@ -11,14 +11,27 @@ public class CastingCanvasHandler : MonoBehaviour
     private float fillTime;
     private bool okToFill;
     private float duration;
+    private string castingString = "Casting...";
+    private string channelingString = "Channeling...";
 
-
-    public void HandleSlider(float castTime)
+    public void HandleSlider(float castTime, bool isCasting)
     {
+        HandleText(isCasting);
         duration = castTime;
         FillCoroutine = StartCoroutine(AllowSliderToFill(duration));
     }
 
+     void HandleText(bool isCasting)
+    {
+        if (isCasting)
+        {
+            castingText.text = castingString;
+        }
+        else
+        {
+            castingText.text = channelingString;
+        }
+    }
 
     private void FixedUpdate()
     {
