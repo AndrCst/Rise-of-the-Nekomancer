@@ -5,20 +5,17 @@ public class AbilityHandler : MonoBehaviour, IPoolable
 {
     public Ability MyAbility;
     public GameObject TargetingObj;
-    public virtual void OnSpawn() //TODO: This is behaving weirdly. To be able to aim, I need it to be channeled, but channeled was technically supposed to happen always
-    {
-
-        
+    public virtual void OnSpawn() 
+    {    
             waitCoroutine = StartCoroutine(WaitForCast());
 
             if (TargetingObj != null)
             {
                 TargetingObj.SetActive(true);
-            }
-      
+            }    
     }
 
-    public virtual void OnReturn() //I wonder if I should just call this on the PoolManager?
+    public virtual void OnReturn() 
     {
         if (TargetingObj != null)
         {
