@@ -9,20 +9,13 @@ public class AbilityHandler : MonoBehaviour, IPoolable
     {
 
         
-        if (MyAbility.CastTime > 0)
-        {
             waitCoroutine = StartCoroutine(WaitForCast());
 
             if (TargetingObj != null)
             {
                 TargetingObj.SetActive(true);
             }
-        }
-        else
-        {
-            FireEffect();
-            RemoveObject();
-        }
+      
     }
 
     public virtual void OnReturn() //I wonder if I should just call this on the PoolManager?

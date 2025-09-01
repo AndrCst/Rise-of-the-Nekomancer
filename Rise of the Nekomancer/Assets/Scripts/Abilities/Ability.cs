@@ -96,17 +96,18 @@ public class Ability : MonoBehaviour
 
         cooldownCoroutine ??= StartCoroutine(HandleCooldown(Cooldown));
 
-        if (CastTime > 0)
-        {
             Caster.IsCasting = true;
-
 
             if (StopsToCast)
             {
-               stoppingCoroutine = StartCoroutine(StopToCastCoroutine());
+                stoppingCoroutine = StartCoroutine(StopToCastCoroutine());
             }
 
-            CastingCanvasHandler.HandleSlider(CastTime, true);
+            if (CastTime > 0)
+            {
+
+                CastingCanvasHandler.HandleSlider(CastTime, true);
+            }         
 
             Effect();
 
@@ -118,11 +119,6 @@ public class Ability : MonoBehaviour
             yield return new WaitForSeconds(ChanneledTime);
 
             Caster.IsCasting = false;
-        }
-        else
-        {
-            Effect();
-        }
 
             castingCoroutine = null;
     }
@@ -131,7 +127,7 @@ public class Ability : MonoBehaviour
     IEnumerator StopToCastCoroutine()
     {
         Caster.ShouldBeStoppingForCasting = true;
-        yield return new WaitForSeconds(CastTime);
+        yield return new WaitForSeconds(CastTime + ChanneledTime);
         Caster.ShouldBeStoppingForCasting = false;
         stoppingCoroutine = null;
     }
