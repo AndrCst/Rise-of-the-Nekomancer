@@ -140,17 +140,26 @@ public class AgentController : MonoBehaviour, ICaster
 
     private Coroutine attackCoroutine;
     private IEnumerator AttackingCoroutine()
-    {
-        CurrentAbility.Execute();
-        yield return new WaitForSeconds(CurrentAbility.CastTime);
+    {   
+        if (CurrentAbility.CastingCoroutine != null) 
+        yield return CurrentAbility.CastingCoroutine; //Waits for current coroutine if not null
+
+        CurrentAbility.Execute();           
+
+        yield return new WaitForSeconds(CurrentAbility.CastTime + CurrentAbility.ChanneledTime);
         attackCoroutine = null;
+        HandleDoneAttacking();
+    }
+
+    public void HandleDoneAttacking()
+    {
         if (Target == null)
         {
             stateMachine.ChangeStates(AgentStateID.IdleState);
         }
         else if (CheckTargetOnRange())
         {
-            attackCoroutine = StartCoroutine(AttackingCoroutine());
+            attackCoroutine??= StartCoroutine(AttackingCoroutine());
         }
         else
         {

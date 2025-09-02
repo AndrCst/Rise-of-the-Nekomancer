@@ -74,9 +74,9 @@ public class Ability : MonoBehaviour
     }
     public void Execute()
     {
-        if (castingCoroutine == null)
+        if (CastingCoroutine == null)
         {
-            castingCoroutine = StartCoroutine(HandleExecution());
+            CastingCoroutine = StartCoroutine(HandleExecution());
         }
         else
         {
@@ -85,7 +85,7 @@ public class Ability : MonoBehaviour
     }
 
     private Coroutine cooldownCoroutine;
-    private Coroutine castingCoroutine;
+    public Coroutine CastingCoroutine;
     IEnumerator HandleExecution()
     {
 
@@ -127,7 +127,7 @@ public class Ability : MonoBehaviour
 
             Caster.IsCasting = false;
 
-            castingCoroutine = null;
+            CastingCoroutine = null;
     }
 
     private Coroutine stoppingCoroutine;
@@ -206,12 +206,12 @@ public class Ability : MonoBehaviour
     {
         if (obj == gameObject.transform.parent.gameObject && !UnInterruptable)
         {
-                if (castingCoroutine != null)
+                if (CastingCoroutine != null)
                 {
                     Debug.Log("Cast Interrupted!");
-                    StopCoroutine(castingCoroutine);
+                    StopCoroutine(CastingCoroutine);
                     Caster.IsCasting = false;
-                    castingCoroutine = null;
+                    CastingCoroutine = null;
 
                     if (CastingCanvasHandler.FillCoroutine != null)
                     {
