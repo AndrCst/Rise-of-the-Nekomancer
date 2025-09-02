@@ -175,9 +175,6 @@ public class AgentController : MonoBehaviour, ICaster
     }
 
     private Coroutine trackingCoroutine;
-
-
-
     private IEnumerator TrackTargetCoroutine(Vector3 target)
     {
         if (NavAgent.enabled)
@@ -186,5 +183,10 @@ public class AgentController : MonoBehaviour, ICaster
         }
         yield return new WaitForSeconds(trackDelay);
         trackingCoroutine = null;    
+    }
+
+    public void HandleDeath()
+    {
+
     }
 }
