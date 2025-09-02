@@ -74,7 +74,14 @@ public class Ability : MonoBehaviour
     }
     public void Execute()
     {
-        castingCoroutine??= StartCoroutine(HandleExecution());
+        if (castingCoroutine == null)
+        {
+            castingCoroutine = StartCoroutine(HandleExecution());
+        }
+        else
+        {
+            Debug.Log("Tried casting while casting");
+        }
     }
 
     private Coroutine cooldownCoroutine;
