@@ -238,7 +238,7 @@ public class AgentController : MonoBehaviour, ICaster
     {
         if (obj == Target)
         {
-            EntityEvents.SpellInterrupted(obj);
+            EntityEvents.SpellInterrupted(Target);
             stateMachine.ChangeStates(AgentStateID.IdleState);
         }
     }

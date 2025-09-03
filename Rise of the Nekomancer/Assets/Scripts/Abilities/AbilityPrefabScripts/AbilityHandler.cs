@@ -6,8 +6,8 @@ public class AbilityHandler : MonoBehaviour, IPoolable
     public Ability MyAbility;
     public GameObject TargetingObj;
     public virtual void OnSpawn() 
-    {    
-            WaitCoroutine = StartCoroutine(WaitForCast());
+    {
+        WaitCoroutine = StartCoroutine(WaitForCast());
 
             if (TargetingObj != null)
             {

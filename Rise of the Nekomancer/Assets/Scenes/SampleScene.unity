@@ -857,7 +857,6 @@ MonoBehaviour:
   PlayerController: {fileID: 0}
   FollowOffset: 0
   DeAggroRange: 30
-  revivedVersion: {fileID: 0}
 --- !u!114 &206788231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1183,7 +1182,6 @@ MonoBehaviour:
   PlayerController: {fileID: 0}
   FollowOffset: 0
   DeAggroRange: 30
-  revivedVersion: {fileID: 0}
 --- !u!114 &240460340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1542,7 +1540,6 @@ MonoBehaviour:
   PlayerController: {fileID: 0}
   FollowOffset: 0
   DeAggroRange: 30
-  revivedVersion: {fileID: 0}
 --- !u!114 &275655656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2361,11 +2358,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3725884287251145293, guid: 1ca67c253f066154db0d7cd180d10bcb, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3725884287251145293, guid: 1ca67c253f066154db0d7cd180d10bcb, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6310365504215814786, guid: 1ca67c253f066154db0d7cd180d10bcb, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -2762,11 +2759,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3725884287251145293, guid: 1ca67c253f066154db0d7cd180d10bcb, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3725884287251145293, guid: 1ca67c253f066154db0d7cd180d10bcb, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6310365504215814786, guid: 1ca67c253f066154db0d7cd180d10bcb, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -3931,11 +3928,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3725884287251145293, guid: 1ca67c253f066154db0d7cd180d10bcb, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3725884287251145293, guid: 1ca67c253f066154db0d7cd180d10bcb, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6310365504215814786, guid: 1ca67c253f066154db0d7cd180d10bcb, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -4777,7 +4774,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1127737210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5269,7 +5266,6 @@ MonoBehaviour:
   PlayerController: {fileID: 0}
   FollowOffset: 0
   DeAggroRange: 30
-  revivedVersion: {fileID: 0}
 --- !u!114 &1270579659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6233,7 +6229,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1619808519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7497,7 +7493,6 @@ MonoBehaviour:
   PlayerController: {fileID: 0}
   FollowOffset: 0
   DeAggroRange: 30
-  revivedVersion: {fileID: 0}
 --- !u!1001 &2041477536
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7918,7 +7913,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2129095056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8240,7 +8235,6 @@ MonoBehaviour:
   PlayerController: {fileID: 0}
   FollowOffset: 0
   DeAggroRange: 30
-  revivedVersion: {fileID: 0}
 --- !u!114 &2144107947
 MonoBehaviour:
   m_ObjectHideFlags: 0
