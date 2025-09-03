@@ -71,7 +71,6 @@ public class AgentController : MonoBehaviour, ICaster
         foreach(Ability ability in Abilities)
         {
             ability.Caster = this;
-            ability.CastingCanvasHandler.MyAbility = CurrentAbility;
         }
     }
     private void GetComponents()
@@ -149,7 +148,8 @@ public class AgentController : MonoBehaviour, ICaster
             }
            
         }
-        else if (stateMachine.currentState == AgentStateID.IdleState)
+
+        if (stateMachine.currentState == AgentStateID.IdleState)
         {
             minDistance += FollowOffset;
         }
