@@ -96,7 +96,6 @@ public class AgentController : MonoBehaviour, ICaster
     private void FixedUpdate()
     {
         stateMachine.Update();
-        Debug.Log(stateMachine.currentState);
     }
 
     public void DetectEnemy()
