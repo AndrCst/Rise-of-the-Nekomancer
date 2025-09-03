@@ -1471,8 +1471,8 @@ Rigidbody:
   m_GameObject: {fileID: 708954279}
   serializedVersion: 5
   m_Mass: 20
-  m_LinearDamping: 5
-  m_AngularDamping: 0.5
+  m_LinearDamping: 1
+  m_AngularDamping: 0.1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -2439,7 +2439,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 16
   avoidancePriority: 50
   m_AngularSpeed: 0
   m_StoppingDistance: 1
@@ -2459,8 +2459,8 @@ Rigidbody:
   m_GameObject: {fileID: 1127737209}
   serializedVersion: 5
   m_Mass: 20
-  m_LinearDamping: 5
-  m_AngularDamping: 0.5
+  m_LinearDamping: 1
+  m_AngularDamping: 0.1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -2512,10 +2512,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9883a064d5b860c41b5124c12ac925e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 30
-  MovementSpeed: 3.5
-  MaxHealth: 5000
-  BaseMovementSpeed: 3.5
+  _health: 0
+  MovementSpeed: 0
+  MaxHealth: 50
+  BaseMovementSpeed: 8
   BonusSpeedMultiplier: 0
   healthSlider: {fileID: 606914977}
   controller: {fileID: 1127737210}
@@ -3001,8 +3001,8 @@ Rigidbody:
   m_GameObject: {fileID: 2037564386}
   serializedVersion: 5
   m_Mass: 20
-  m_LinearDamping: 5
-  m_AngularDamping: 0.5
+  m_LinearDamping: 1
+  m_AngularDamping: 0.1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -3123,7 +3123,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 16
   avoidancePriority: 50
   m_AngularSpeed: 0
   m_StoppingDistance: 1
@@ -3146,10 +3146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9883a064d5b860c41b5124c12ac925e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 30
-  MovementSpeed: 3.5
-  MaxHealth: 5000
-  BaseMovementSpeed: 3.5
+  _health: 0
+  MovementSpeed: 0
+  MaxHealth: 50
+  BaseMovementSpeed: 8
   BonusSpeedMultiplier: 0
   healthSlider: {fileID: 6878669950559986565}
   controller: {fileID: 0}
