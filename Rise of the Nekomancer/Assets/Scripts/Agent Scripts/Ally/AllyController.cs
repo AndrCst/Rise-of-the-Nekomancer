@@ -7,4 +7,10 @@ public class AllyController : AgentController
         base.IdleUpdate();
         TrackTarget(PlayerController.transform.position);
     }
+
+    public override void IdleEnter()
+    {
+        base.IdleEnter();
+        Target = PlayerController.gameObject;
+    }
 }
