@@ -17,6 +17,7 @@ public class AgentController : MonoBehaviour, ICaster
     public Ability CurrentAbility;
     public List<Ability> Abilities;
     [SerializeField] private Damageable damageable;
+    public PlayerController PlayerController;
 
     //ICaster
     public bool IsCasting
@@ -56,19 +57,24 @@ public class AgentController : MonoBehaviour, ICaster
     }
     private void GetComponents()
     {
-       if (NavAgent == null)
+        if (NavAgent == null)
         {
             NavAgent = GetComponent<NavMeshAgent>();
         }
 
-       if (Collider == null)
+        if (Collider == null)
         {
             Collider = GetComponent<CapsuleCollider>();
         }
 
-       if (damageable == null)
+        if (damageable == null)
         {
             damageable = GetComponent<Damageable>();
+        }
+
+        if (PlayerController == null)
+        {
+            PlayerController = GameManager.Instance.PlayerController;
         }
 
         CreateStateMachine();      
@@ -186,6 +192,8 @@ public class AgentController : MonoBehaviour, ICaster
     private Coroutine trackingCoroutine;
     private IEnumerator TrackTargetCoroutine(Vector3 target)
     {
+        NavAgent.stoppingDistance = GetStoppingDistance();
+
         if (NavAgent.enabled)
         {
             NavAgent.SetDestination(target);
@@ -194,12 +202,49 @@ public class AgentController : MonoBehaviour, ICaster
         trackingCoroutine = null;    
     }
 
+    public void HandleDeath()
+    {
+        stateMachine.ChangeStates(AgentStateID.DeathState);
+    }
+
+    public virtual void IdleEnter()
+    {
+
+    }
+
+    public virtual void IdleExit()
+    {
+
+    }
+
     public virtual void IdleUpdate()
     {
         DetectEnemy();
     }
 
+    public virtual void AttackEnter()
+    {
+        NavAgent.enabled = false;
+        StartAttacking();
+    }
+
+    public virtual void AttackExit()
+    {
+        NavAgent.enabled = true;
+    }
+
     public virtual void AttackUpdate()
+    {
+
+    }
+
+    public virtual void PathingEnter()
+    {
+        ChooseNextAbility();
+
+    }
+
+    public virtual void PathingExit()
     {
 
     }
@@ -210,8 +255,49 @@ public class AgentController : MonoBehaviour, ICaster
         ChangeToAttack();
     }
 
-    public void HandleDeath()
+    public virtual void DeathEnter()
     {
 
     }
+
+    public virtual void DeathExit()
+    {
+
+    }
+
+    public virtual void DeathUpdate()
+    {
+
+    }
+
+    public virtual void PeacefulEnter()
+    {
+
+    }
+
+    public virtual void PeacefulExit()
+    {
+
+    }
+
+    public virtual void PeacefulUpdate()
+    {
+
+    }
+
+    public virtual void SpawningEnter()
+    {
+
+    }
+
+    public virtual void SpawningExit()
+    {
+
+    }
+
+    public virtual void SpawningUpdate()
+    {
+
+    }
+ 
 }

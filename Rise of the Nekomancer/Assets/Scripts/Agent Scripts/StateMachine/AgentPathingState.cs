@@ -6,12 +6,12 @@ public class AgentPathingState : AgentState
 {
     public void Enter(AgentController agent)
     {
-        agent.ChooseNextAbility();
-        agent.NavAgent.stoppingDistance = agent.GetStoppingDistance();
+        agent.PathingEnter();
     }
 
     public void Exit(AgentController agent)
     {
+        agent.PathingExit();
     }
 
     public void Update(AgentController agent)

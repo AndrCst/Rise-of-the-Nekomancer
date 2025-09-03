@@ -6,17 +6,17 @@ public class AgentAttackState : AgentState
 {
     public void Enter(AgentController agent)
     {
-        agent.NavAgent.enabled = false;
-        agent.StartAttacking();
+        agent.AttackEnter();
     }
 
     public void Exit(AgentController agent)
     {
-        agent.NavAgent.enabled = true;
+        agent.AttackExit();
     }
 
     public void Update(AgentController agent)
     {
+        agent.AttackUpdate();
     }
 
 
