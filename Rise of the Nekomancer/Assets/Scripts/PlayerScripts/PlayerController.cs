@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour, ICaster
     public bool CanMove = true;
     private Camera mainCamera;
     [SerializeField] private Rigidbody rb;
-    private float speedMultiplier = 100000f; //For linear damping 5 and angular 0.5
+    private float speedMultiplier = 500f; //For linear damping 5 and angular 0.5
     public Collider Collider;
     [SerializeField] private Damageable damageable;
 
@@ -115,7 +115,9 @@ public class PlayerController : MonoBehaviour, ICaster
         {
             var adjustedDirection = new Vector3(movementDirection.x, movementDirection.y, movementDirection.z);
 
-            rb.AddForce(damageable.MovementSpeed * speedMultiplier * Time.deltaTime * adjustedDirection, ForceMode.Force);
+            //rb.AddForce(damageable.MovementSpeed * speedMultiplier * Time.deltaTime * adjustedDirection, ForceMode.Force);
+
+            rb.linearVelocity = damageable.MovementSpeed * speedMultiplier * Time.deltaTime * adjustedDirection;
         }
     }
 }

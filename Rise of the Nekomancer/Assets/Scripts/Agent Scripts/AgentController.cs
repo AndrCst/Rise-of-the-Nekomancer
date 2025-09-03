@@ -23,6 +23,7 @@ public class AgentController : MonoBehaviour, ICaster
     public float DeAggroRange;
     private bool recentlyDeaggroed;
     public const float DE_AGGRO_DURATION = 5;
+    public const float DE_AGGRO_GRACE_TIME = 1.5f;
 
     //ICaster
     public bool IsCasting
@@ -110,7 +111,6 @@ public class AgentController : MonoBehaviour, ICaster
     private void FixedUpdate()
     {
         stateMachine.Update();
-        Debug.Log(stateMachine.currentState);
     }
 
     public void DetectEnemy()
@@ -123,9 +123,9 @@ public class AgentController : MonoBehaviour, ICaster
 
         if (targets.Count > 0)
         {
-            Target = ProjectTools.GetNearestObject(targets, transform.position);         
-
-            stateMachine.ChangeStates(AgentStateID.PathingState);
+            var foundTarget = ProjectTools.GetNearestObject(targets, transform.position);            
+            Target = foundTarget;
+            stateMachine.ChangeStates(AgentStateID.PathingState);          
         }
     }
 
@@ -139,6 +139,7 @@ public class AgentController : MonoBehaviour, ICaster
 
         if (CurrentAbility != null && stateMachine.currentState == AgentStateID.PathingState)
         {
+            if (ProjectTools.GetTargetOnSight(Target, transform.position, CurrentAbility.Range, VisibilityMask))
             minDistance += CurrentAbility.Range;
         }
         else if (stateMachine.currentState == AgentStateID.IdleState)
@@ -151,7 +152,7 @@ public class AgentController : MonoBehaviour, ICaster
 
     private bool CheckTargetOnRange()
     {
-        if (ProjectTools.GetObjectOnRange(transform.position, Target, GetStoppingDistance(Target)) && ProjectTools.GetTargetOnSight(Target, transform.position, CurrentAbility.Range, VisibilityMask))
+        if (ProjectTools.GetObjectOnRange(transform.position, Target, GetStoppingDistance(Target)))
         {
             return true;
         }
@@ -192,7 +193,7 @@ public class AgentController : MonoBehaviour, ICaster
         }
         else
         {
-            stateMachine.ChangeStates(AgentStateID.PathingState);
+            stateMachine.ChangeStates(AgentStateID.IdleState);
         }
     }
 
@@ -227,6 +228,16 @@ public class AgentController : MonoBehaviour, ICaster
     {
         if (!ProjectTools.GetTargetOnRange(transform.position, checkedTarget.transform.position, DeAggroRange) && !recentlyDeaggroed)
         {
+            StartCoroutine(AggroTimeCoroutine(checkedTarget));
+        }
+    }
+
+
+    IEnumerator AggroTimeCoroutine(GameObject checkedTarget)
+    {
+        yield return new WaitForSeconds(DE_AGGRO_GRACE_TIME);
+        if (!ProjectTools.GetTargetOnRange(transform.position, checkedTarget.transform.position, DeAggroRange))
+        {
             HandleDeaggro();
         }
     }
@@ -240,6 +251,10 @@ public class AgentController : MonoBehaviour, ICaster
     public IEnumerator DeAggroCoroutine()
     {
         recentlyDeaggroed = true;
+        if (NavAgent.enabled)
+        {
+            NavAgent.ResetPath();
+        }
         EntityEvents.SpellInterrupted(gameObject);
         stateMachine.ChangeStates(AgentStateID.IdleState);
         yield return new WaitForSeconds(DE_AGGRO_DURATION);
