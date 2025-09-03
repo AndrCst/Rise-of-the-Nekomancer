@@ -53,15 +53,13 @@ public class AgentController : MonoBehaviour, ICaster
     private void OnEnable()
     {
         EntityEvents.OnSpellInterrupted += HandleInterruption;
-        EntityEvents.OnEntityDied += HandleInterruption;
-        EntityEvents.OnEntityDied += Retarget;
+        EntityEvents.OnEntityDied += HandleTargetDeath;
     }
 
     private void OnDisable()
     {
         EntityEvents.OnSpellInterrupted -= HandleInterruption;
-        EntityEvents.OnEntityDied -= HandleInterruption;
-        EntityEvents.OnEntityDied -= Retarget;
+        EntityEvents.OnEntityDied -= HandleTargetDeath;
     }
 
     void GetStartInfo()
@@ -73,6 +71,7 @@ public class AgentController : MonoBehaviour, ICaster
         foreach(Ability ability in Abilities)
         {
             ability.Caster = this;
+            ability.CastingCanvasHandler.MyAbility = CurrentAbility;
         }
     }
     private void GetComponents()
@@ -234,15 +233,6 @@ public class AgentController : MonoBehaviour, ICaster
         }
     }
 
-    public void Retarget(GameObject obj)
-    {
-        if (obj == Target)
-        {
-            EntityEvents.SpellInterrupted(Target);
-            stateMachine.ChangeStates(AgentStateID.IdleState);
-        }
-    }
-
 
     IEnumerator AggroTimeCoroutine(GameObject checkedTarget)
     {
@@ -282,17 +272,21 @@ public class AgentController : MonoBehaviour, ICaster
     {
         if (obj == gameObject)
         {
-            InterruptSpell();
+            InterruptAttack();
         }    
+    }
 
+    void HandleTargetDeath(GameObject obj)
+    {
         if (obj == Target)
         {
-            InterruptSpell();
+            EntityEvents.SpellInterrupted(gameObject);
+            stateMachine.ChangeStates(AgentStateID.IdleState);
         }
     }
 
 
-    void InterruptSpell()
+    void InterruptAttack()
     {
         if (attackCoroutine != null)
         {

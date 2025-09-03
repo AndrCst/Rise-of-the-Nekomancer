@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cooldown: 0.05
-  InterruptedCooldown: 1
-  CastTime: 3
-  IsChanneled: 1
+  InterruptedCooldown: 0
+  CastTime: 2
+  ChanneledTime: 0
   StopsToCast: 1
   IsOnCooldown: 0
   UnInterruptable: 0
