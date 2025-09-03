@@ -16,8 +16,7 @@ public class AgentPathingState : AgentState
 
     public void Update(AgentController agent)
     {
-        agent.TrackTarget(agent.Target.transform.position);
-        agent.ChangeToAttack();
+        agent.PathingUpdate();
     }
 
 

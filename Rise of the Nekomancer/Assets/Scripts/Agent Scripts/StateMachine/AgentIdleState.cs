@@ -12,7 +12,7 @@ public class AgentIdleState : AgentState
 
     public void Update(AgentController agent)
     {
-        agent.DetectEnemy();
+        agent.IdleUpdate();
     }
 
 

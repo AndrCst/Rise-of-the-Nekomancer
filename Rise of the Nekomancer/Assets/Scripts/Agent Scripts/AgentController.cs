@@ -112,7 +112,7 @@ public class AgentController : MonoBehaviour, ICaster
 
         float minDistance = targetRadius + myRadius;
 
-        if (CurrentAbility != null)
+        if (CurrentAbility != null && stateMachine.currentState == AgentStateID.PathingState)
         {
             minDistance += CurrentAbility.Range;
         }
@@ -192,6 +192,22 @@ public class AgentController : MonoBehaviour, ICaster
         }
         yield return new WaitForSeconds(trackDelay);
         trackingCoroutine = null;    
+    }
+
+    public virtual void IdleUpdate()
+    {
+        DetectEnemy();
+    }
+
+    public virtual void AttackUpdate()
+    {
+
+    }
+
+    public virtual void PathingUpdate()
+    {
+        TrackTarget(Target.transform.position);
+        ChangeToAttack();
     }
 
     public void HandleDeath()
