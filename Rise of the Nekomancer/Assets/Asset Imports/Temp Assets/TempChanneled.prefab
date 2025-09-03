@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5378507484995995349}
   - component: {fileID: 749895208962951118}
   - component: {fileID: 5020935608075736539}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8684652951746648628}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ChanneledEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7109507531022525692}
   - component: {fileID: 2052700402470017970}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TempChanneled
   m_TagString: Untagged
   m_Icon: {fileID: 0}

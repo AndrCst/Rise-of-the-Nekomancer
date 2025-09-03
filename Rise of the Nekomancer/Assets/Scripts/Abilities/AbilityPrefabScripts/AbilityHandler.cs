@@ -7,7 +7,7 @@ public class AbilityHandler : MonoBehaviour, IPoolable
     public GameObject TargetingObj;
     public virtual void OnSpawn() 
     {    
-            waitCoroutine = StartCoroutine(WaitForCast());
+            WaitCoroutine = StartCoroutine(WaitForCast());
 
             if (TargetingObj != null)
             {
@@ -23,7 +23,7 @@ public class AbilityHandler : MonoBehaviour, IPoolable
         }
     }
 
-    private Coroutine waitCoroutine;
+    public Coroutine WaitCoroutine;
     IEnumerator WaitForCast()
     {
         yield return new WaitForSeconds(MyAbility.CastTime);
@@ -44,10 +44,18 @@ public class AbilityHandler : MonoBehaviour, IPoolable
     }
     public virtual void HandleInterruption(GameObject obj)
     {
-        if (obj == MyAbility.Caster.CastingObject && waitCoroutine != null)
+        if (obj == MyAbility.Caster.CastingObject)
         {
-            StopCoroutine(waitCoroutine);
-            waitCoroutine = null;
+            HandleStop();
+        }
+    }
+
+    public void HandleStop()
+    {
+        if (WaitCoroutine != null)
+        {
+            StopCoroutine(WaitCoroutine);
+            WaitCoroutine = null;
             OnReturn();
             ObjectPoolManager.ReturnObjectToPool(gameObject);
         }
@@ -56,10 +64,12 @@ public class AbilityHandler : MonoBehaviour, IPoolable
     private void OnEnable()
     {
         EntityEvents.OnSpellInterrupted += HandleInterruption;
+        EntityEvents.OnEntityDied += HandleInterruption;
     }
 
     private void OnDisable()
     {
         EntityEvents.OnSpellInterrupted -= HandleInterruption;
+        EntityEvents.OnEntityDied -= HandleInterruption;
     }
 }

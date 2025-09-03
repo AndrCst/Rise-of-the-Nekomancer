@@ -53,11 +53,15 @@ public class AgentController : MonoBehaviour, ICaster
     private void OnEnable()
     {
         EntityEvents.OnSpellInterrupted += HandleInterruption;
+        EntityEvents.OnEntityDied += HandleInterruption;
+        EntityEvents.OnEntityDied += Retarget;
     }
 
     private void OnDisable()
     {
         EntityEvents.OnSpellInterrupted -= HandleInterruption;
+        EntityEvents.OnEntityDied -= HandleInterruption;
+        EntityEvents.OnEntityDied -= Retarget;
     }
 
     void GetStartInfo()
@@ -137,10 +141,14 @@ public class AgentController : MonoBehaviour, ICaster
 
         float minDistance = targetRadius + myRadius;
 
-        if (CurrentAbility != null && stateMachine.currentState == AgentStateID.PathingState)
+        if (CurrentAbility != null)
         {
-            if (ProjectTools.GetTargetOnSight(Target, transform.position, CurrentAbility.Range, VisibilityMask))
-            minDistance += CurrentAbility.Range;
+            if (stateMachine.currentState == AgentStateID.PathingState || stateMachine.currentState == AgentStateID.AttackState)
+            {
+                if (ProjectTools.GetTargetOnSight(Target, transform.position, CurrentAbility.Range, VisibilityMask))
+                    minDistance += CurrentAbility.Range;
+            }
+           
         }
         else if (stateMachine.currentState == AgentStateID.IdleState)
         {
@@ -170,13 +178,14 @@ public class AgentController : MonoBehaviour, ICaster
 
     private Coroutine attackCoroutine;
     private IEnumerator AttackingCoroutine()
-    {   
-        if (CurrentAbility.CastingCoroutine != null) 
-        yield return CurrentAbility.CastingCoroutine; //Waits for current coroutine if not null
+    {
+        if (CurrentAbility.CastingCoroutine != null)
+            yield return CurrentAbility.CastingCoroutine; //Waits for current coroutine if not null
 
         CurrentAbility.Execute();           
 
         yield return new WaitForSeconds(CurrentAbility.CastTime + CurrentAbility.ChanneledTime);
+    
         attackCoroutine = null;
         HandleDoneAttacking();
     }
@@ -189,7 +198,7 @@ public class AgentController : MonoBehaviour, ICaster
         }
         else if (CheckTargetOnRange())
         {
-            attackCoroutine??= StartCoroutine(AttackingCoroutine());
+            attackCoroutine ??= StartCoroutine(AttackingCoroutine());
         }
         else
         {
@@ -232,6 +241,15 @@ public class AgentController : MonoBehaviour, ICaster
         }
     }
 
+    public void Retarget(GameObject obj)
+    {
+        if (obj == Target)
+        {
+            EntityEvents.SpellInterrupted(obj);
+            stateMachine.ChangeStates(AgentStateID.IdleState);
+        }
+    }
+
 
     IEnumerator AggroTimeCoroutine(GameObject checkedTarget)
     {
@@ -269,7 +287,21 @@ public class AgentController : MonoBehaviour, ICaster
 
     void HandleInterruption(GameObject obj)
     {
-        if (obj == gameObject && attackCoroutine != null)
+        if (obj == gameObject)
+        {
+            InterruptSpell();
+        }    
+
+        if (obj == Target)
+        {
+            InterruptSpell();
+        }
+    }
+
+
+    void InterruptSpell()
+    {
+        if (attackCoroutine != null)
         {
             StopCoroutine(attackCoroutine);
             attackCoroutine = null;
@@ -328,7 +360,10 @@ public class AgentController : MonoBehaviour, ICaster
 
     public virtual void DeathEnter()
     {
-
+        //TEMPORARY!!
+        EntityEvents.SpellInterrupted(gameObject);
+        Destroy(gameObject);
+        //var visuals = GetComponent<MeshRenderer>().enabled = false;
     }
 
     public virtual void DeathExit()

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4688245566235963144}
   - component: {fileID: 1707340522443238794}
   - component: {fileID: 8655619620264080139}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyBasicProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetPosition: {x: 0, y: 0, z: 0}
   ProjectileSpeed: 20
-  Damage: 5
+  Damage: 10
   TargetTag:
   - Player
   - Ally

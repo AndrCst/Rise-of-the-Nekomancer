@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &722273780860267078
 Transform:
   m_ObjectHideFlags: 0
@@ -133,6 +133,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MyAbility: {fileID: 0}
-  TargetingObj: {fileID: 1278909655515447449}
+  TargetingObj: {fileID: 0}
   locksIn: 1
   projectilePrefab: {fileID: 8655619620264080139, guid: 99a793ac9fb512a46ba268024f6b3438, type: 3}

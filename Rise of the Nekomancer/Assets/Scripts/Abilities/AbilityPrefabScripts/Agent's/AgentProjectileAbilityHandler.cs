@@ -52,4 +52,19 @@ public class AgentProjectileAbilityHandler : AbilityHandler
             transform.forward = controller.Target.transform.position - transform.position;
         }
     }
+
+    public override void HandleInterruption(GameObject obj)
+    {
+        base.HandleInterruption(obj);
+        HandleTargetDied(obj);
+    }
+ 
+
+    void HandleTargetDied(GameObject obj)
+    {
+        if (obj = controller.Target)
+        {
+            HandleStop();
+        }
+    }
 }
