@@ -18,6 +18,7 @@ public class AgentController : MonoBehaviour, ICaster
     public List<Ability> Abilities;
     [SerializeField] private Damageable damageable;
     public PlayerController PlayerController;
+    public float FollowOffset;
 
     //ICaster
     public bool IsCasting
@@ -122,8 +123,12 @@ public class AgentController : MonoBehaviour, ICaster
         {
             minDistance += CurrentAbility.Range;
         }
+        else if (stateMachine.currentState == AgentStateID.IdleState)
+        {
+            minDistance += FollowOffset;
+        }
 
-        return minDistance;
+            return minDistance;
     }
 
     private bool CheckTargetOnRange()
