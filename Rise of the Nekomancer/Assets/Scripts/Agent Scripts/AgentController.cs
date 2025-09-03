@@ -168,7 +168,7 @@ public class AgentController : MonoBehaviour, ICaster
         return false;
     }
 
-    public void ChangeToAttack()
+     void ChangeToAttack()
     {
         if (CheckTargetOnRange())
         {
@@ -178,37 +178,30 @@ public class AgentController : MonoBehaviour, ICaster
 
     private Coroutine attackCoroutine;
     private IEnumerator AttackingCoroutine()
-    {
+    {      
+        CurrentAbility.Execute();
+
         if (CurrentAbility.CastingCoroutine != null)
             yield return CurrentAbility.CastingCoroutine; //Waits for current coroutine if not null
 
-        CurrentAbility.Execute();           
-
-        yield return new WaitForSeconds(CurrentAbility.CastTime + CurrentAbility.ChanneledTime);
-    
         attackCoroutine = null;
         HandleDoneAttacking();
     }
 
     public void HandleDoneAttacking()
     {
-        if (Target == null)
-        {
-            stateMachine.ChangeStates(AgentStateID.IdleState);
-        }
-        else if (CheckTargetOnRange())
-        {
-            attackCoroutine ??= StartCoroutine(AttackingCoroutine());
-        }
-        else
+       if (!CheckTargetOnRange())
         {
             stateMachine.ChangeStates(AgentStateID.IdleState);
         }
     }
 
-    public void StartAttacking()
+     void HandleAttacking()
     {
-        attackCoroutine ??= StartCoroutine(AttackingCoroutine());
+        if (attackCoroutine == null && !CurrentAbility.IsOnCooldown && !IsCasting)
+        {
+            attackCoroutine = StartCoroutine(AttackingCoroutine());
+        }
     }
 
     public virtual void ChooseNextAbility() //Decision logic can be added here. Overwrite if you don't want random
@@ -327,7 +320,6 @@ public class AgentController : MonoBehaviour, ICaster
     public virtual void AttackEnter()
     {
         NavAgent.enabled = false;
-        StartAttacking();
     }
 
     public virtual void AttackExit()
@@ -337,6 +329,7 @@ public class AgentController : MonoBehaviour, ICaster
 
     public virtual void AttackUpdate()
     {
+        HandleAttacking();
         CheckForDeAggro(Target);
     }
 
