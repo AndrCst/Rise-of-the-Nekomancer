@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetPosition: {x: 0, y: 0, z: 0}
   ProjectileSpeed: 20
-  Damage: 10
+  Damage: 5
   TargetTag:
   - Player
   - Ally
