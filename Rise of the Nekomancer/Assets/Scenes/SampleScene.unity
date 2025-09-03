@@ -709,7 +709,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: -2.5200002, y: 6.65, z: -5.25}
+  m_LocalPosition: {x: -8.17, y: 17.509998, z: -10.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2153,7 +2153,7 @@ Transform:
   m_GameObject: {fileID: 1040838894}
   serializedVersion: 2
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: -2.5200002, y: 6.65, z: -5.25}
+  m_LocalPosition: {x: -8.17, y: 17.509998, z: -10.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2177,7 +2177,7 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  FollowOffset: {x: -4.63, y: 5.77, z: -4.46}
+  FollowOffset: {x: -10.28, y: 16.63, z: -9.81}
 --- !u!1001 &1055395896
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2416,14 +2416,18 @@ MonoBehaviour:
   SearchedMask:
     serializedVersion: 2
     m_Bits: 192
+  VisibilityMask:
+    serializedVersion: 2
+    m_Bits: 193
   startingState: 1
   Collider: {fileID: 1127737213}
   CurrentAbility: {fileID: 2041477537}
   Abilities:
   - {fileID: 2041477537}
-  damageable: {fileID: 1127737214}
+  Damageable: {fileID: 0}
   PlayerController: {fileID: 0}
   FollowOffset: 2
+  DeAggroRange: 30
 --- !u!195 &1127737211
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2510,7 +2514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: 30
   MovementSpeed: 3.5
-  MaxHealth: 30
+  MaxHealth: 5000
   BaseMovementSpeed: 3.5
   BonusSpeedMultiplier: 0
   healthSlider: {fileID: 606914977}
@@ -3100,7 +3104,7 @@ Transform:
   m_GameObject: {fileID: 2037564386}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 52.2, y: 0.88, z: 3.4}
+  m_LocalPosition: {x: 22.52, y: 0.88, z: 12.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3144,7 +3148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: 30
   MovementSpeed: 3.5
-  MaxHealth: 30
+  MaxHealth: 5000
   BaseMovementSpeed: 3.5
   BonusSpeedMultiplier: 0
   healthSlider: {fileID: 6878669950559986565}
@@ -3170,14 +3174,18 @@ MonoBehaviour:
   SearchedMask:
     serializedVersion: 2
     m_Bits: 192
+  VisibilityMask:
+    serializedVersion: 2
+    m_Bits: 193
   startingState: 1
   Collider: {fileID: 2037564388}
   CurrentAbility: {fileID: 1462793898431578815}
   Abilities:
   - {fileID: 1462793898431578815}
-  damageable: {fileID: 2037564394}
+  Damageable: {fileID: 0}
   PlayerController: {fileID: 0}
   FollowOffset: 0
+  DeAggroRange: 30
   revivedVersion: {fileID: 0}
 --- !u!1001 &2041477536
 PrefabInstance:

@@ -10,15 +10,19 @@ public class AgentController : MonoBehaviour, ICaster
     public string[] DetectedStrings;
     public float DetectionRange;
     public LayerMask SearchedMask;
+    public LayerMask VisibilityMask;
     private AgentStateMachine stateMachine;
     [SerializeField] private AgentStateID startingState;
     private float trackDelay = 0.1f;
     public CapsuleCollider Collider;
     public Ability CurrentAbility;
     public List<Ability> Abilities;
-    [SerializeField] private Damageable damageable;
+    public Damageable Damageable;
     public PlayerController PlayerController;
     public float FollowOffset;
+    public float DeAggroRange;
+    private bool recentlyDeaggroed;
+    public const float DE_AGGRO_DURATION = 5;
 
     //ICaster
     public bool IsCasting
@@ -45,11 +49,21 @@ public class AgentController : MonoBehaviour, ICaster
         GetStartInfo();
     }
 
+    private void OnEnable()
+    {
+        EntityEvents.OnSpellInterrupted += HandleInterruption;
+    }
+
+    private void OnDisable()
+    {
+        EntityEvents.OnSpellInterrupted -= HandleInterruption;
+    }
+
     void GetStartInfo()
     {
         CurrentAbility = Abilities[0];
 
-        NavAgent.speed = damageable.BaseMovementSpeed;
+        NavAgent.speed = Damageable.BaseMovementSpeed;
 
         foreach(Ability ability in Abilities)
         {
@@ -68,9 +82,9 @@ public class AgentController : MonoBehaviour, ICaster
             Collider = GetComponent<CapsuleCollider>();
         }
 
-        if (damageable == null)
+        if (Damageable == null)
         {
-            damageable = GetComponent<Damageable>();
+            Damageable = GetComponent<Damageable>();
         }
 
         if (PlayerController == null)
@@ -96,10 +110,15 @@ public class AgentController : MonoBehaviour, ICaster
     private void FixedUpdate()
     {
         stateMachine.Update();
+        Debug.Log(stateMachine.currentState);
     }
 
     public void DetectEnemy()
     {
+        if (recentlyDeaggroed)
+        {
+            return;
+        }
        var targets = ProjectTools.GetValidObjectsOnRange(transform.position, DetectionRange, DetectedStrings, SearchedMask);
 
         if (targets.Count > 0)
@@ -110,9 +129,9 @@ public class AgentController : MonoBehaviour, ICaster
         }
     }
 
-    public float GetStoppingDistance()
+    public float GetStoppingDistance(GameObject target)
     {
-        float targetRadius = Target.GetComponent<CapsuleCollider>().radius;
+        float targetRadius = target.GetComponent<CapsuleCollider>().radius;
 
         float myRadius = Collider.radius;
 
@@ -132,7 +151,7 @@ public class AgentController : MonoBehaviour, ICaster
 
     private bool CheckTargetOnRange()
     {
-        if (ProjectTools.GetObjectOnRange(transform.position, Target, GetStoppingDistance()))
+        if (ProjectTools.GetObjectOnRange(transform.position, Target, GetStoppingDistance(Target)) && ProjectTools.GetTargetOnSight(Target, transform.position, CurrentAbility.Range, VisibilityMask))
         {
             return true;
         }
@@ -196,8 +215,6 @@ public class AgentController : MonoBehaviour, ICaster
     private Coroutine trackingCoroutine;
     private IEnumerator TrackTargetCoroutine(Vector3 target)
     {
-        NavAgent.stoppingDistance = GetStoppingDistance();
-
         if (NavAgent.enabled)
         {
             NavAgent.SetDestination(target);
@@ -206,9 +223,43 @@ public class AgentController : MonoBehaviour, ICaster
         trackingCoroutine = null;    
     }
 
+    public void CheckForDeAggro(GameObject checkedTarget)
+    {
+        if (!ProjectTools.GetTargetOnRange(transform.position, checkedTarget.transform.position, DeAggroRange) && !recentlyDeaggroed)
+        {
+            HandleDeaggro();
+        }
+    }
+
+    public virtual void HandleDeaggro()
+    {
+        deaggroCoroutine ??= StartCoroutine(DeAggroCoroutine());
+    }
+
+    private Coroutine deaggroCoroutine;
+    public IEnumerator DeAggroCoroutine()
+    {
+        recentlyDeaggroed = true;
+        EntityEvents.SpellInterrupted(gameObject);
+        stateMachine.ChangeStates(AgentStateID.IdleState);
+        yield return new WaitForSeconds(DE_AGGRO_DURATION);
+        recentlyDeaggroed = false;
+        deaggroCoroutine = null;
+    }
+
     public void HandleDeath()
     {
         stateMachine.ChangeStates(AgentStateID.DeathState);
+    }
+
+    void HandleInterruption(GameObject obj)
+    {
+        if (obj == gameObject && attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+            attackCoroutine = null;
+            HandleDoneAttacking();
+        }    
     }
 
     public virtual void IdleEnter()
@@ -239,13 +290,13 @@ public class AgentController : MonoBehaviour, ICaster
 
     public virtual void AttackUpdate()
     {
-
+        CheckForDeAggro(Target);
     }
 
     public virtual void PathingEnter()
     {
+        NavAgent.stoppingDistance = GetStoppingDistance(Target);
         ChooseNextAbility();
-
     }
 
     public virtual void PathingExit()
@@ -256,6 +307,7 @@ public class AgentController : MonoBehaviour, ICaster
     public virtual void PathingUpdate()
     {
         TrackTarget(Target.transform.position);
+        CheckForDeAggro(Target);
         ChangeToAttack();
     }
 
